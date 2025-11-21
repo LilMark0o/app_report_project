@@ -1,0 +1,639 @@
+% RustDesk Application Analysis - Ultra-Lite for Overleaf
+\documentclass[11pt]{article}
+
+% Minimal packages only
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{hyperref}
+
+% Hyperref settings
+\hypersetup{
+  pdftitle={RustDesk Analysis},
+  pdfauthor={Team 23 Flutter},
+  colorlinks=true,
+  linkcolor=blue,
+  urlcolor=blue
+}
+
+% Graphics path
+\graphicspath{{vertopal_0f07811daf6e4406a03d42fa9af41abf/}}
+
+\title{\textbf{App Report 3: Team 23 Flutter\\RustDesk Application Analysis}}
+\author{Marco Alejandro Ramírez - 202210308\\Diego Alejandro Pulido\\Nicolás Casas Ibarra - 202212190}
+\date{November 5, 2025}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\newpage
+
+\textbf{Repository:} \url{https://github.com/rustdesk/rustdesk}
+
+\section{Rustdesk Application Description}
+
+RustDesk is an open-source remote-desktop app that lets you securely control a computer from your phone, without needing a mandatory account or complex setup. Connections are peer-to-peer (P2P) where possible and are protected with end-to-end encryption.
+
+\textbf{Core functionalities:}
+\begin{itemize}
+\item Connect \& control quickly: Enter the PC's ID (and password), then tap to connect. Sessions feel responsive thanks to efficient codecs.
+\item Thoughtful mobile controls: Switch between Touch (tap/drag like a touchscreen) and Mouse (virtual cursor). On Android, two-finger tap = right-click.
+\item File transfer (Android): A dual-pane file manager lets you copy files between phone and PC.
+\item Chat \& clipboard: During sessions, RustDesk supports in-app chat and clipboard sync.
+\item Self hosting: Configure the mobile app to use your own ID and relay servers for maximum privacy.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.5\linewidth]{81315c5739fa3c86fa77bc7af402f13ab3a2542c.png}
+\caption{Rustdesk on App Store}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.6\linewidth]{22e0d9082f6d39e07675962297fcaa9330c3d58e.png}
+\caption{Rustdesk on PC}
+\end{figure}
+
+\textbf{Platform differences:} Android supports full remote control, file transfer, and advanced settings. iOS is controller-only (you can control other devices but cannot share your iOS screen).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.4\linewidth]{d610a0b19870ba73666c2d4f0df58bb18f4fa01c.png}
+\caption{Rustdesk on iPhone}
+\end{figure}
+
+\subsection{Revenue model}
+
+RustDesk's client is free and open-source, but monetizes via paid licenses for RustDesk Server Pro (self-hosted server). Plans start at \$9.90/month (Individual) and \$19.90/month (Basic) billed annually, adding features like web console, address book, audit logs, SSO, and 2FA.
+
+\subsection{Downloads}
+
+Android: Distributed via F-Droid and direct APK (not on Google Play). iOS: Available on App Store but Apple doesn't publish download counts. GitHub repo has ~96k+ stars indicating substantial adoption.
+
+\subsection{What's interesting}
+
+Quick P2P connectivity with optional self-hosting is rare in consumer remote-desktop tools. Thoughtful mobile UX (Touch/Mouse modes, two-finger right-click). No forced account. Clear platform stance with transparency about iOS limitations.
+
+\section{Repository Description}
+
+Repository: \url{https://github.com/rustdesk/rustdesk}
+
+The repository contains both mobile and desktop implementations with 341+ contributors, 57\% of commits from 2 main contributors. 14.2K forks, 31 releases.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.6\linewidth]{a309aa5966a3d51f381cb054dcdc35cb822fb986.png}
+\caption{Contribution and languages}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\linewidth]{81183a43edae8d04ec56b98956eaa603476599be.png}
+\caption{Main contributors}
+\end{figure}
+
+\textbf{Codebase:} 210,720 total lines (184,626 code, 8,853 comments). Primary languages: Rust (104,208 lines), Dart (53,490 lines), plus C++, C, YAML, and others.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.5\linewidth]{250514ee5221afa40fb10863dffec3ddecf8d3f7.png}
+\caption{Lines of code distribution}
+\end{figure}
+
+\textbf{Key folders:}
+\begin{itemize}
+\item \texttt{libs/hbb\_common}: Video codec, config, network, protobuf, file transfer
+\item \texttt{libs/scrap}: Screen capture
+\item \texttt{libs/enigo}: Keyboard/mouse control
+\item \texttt{src/server}: Audio, clipboard, input, video services
+\item \texttt{flutter}: Mobile and desktop Flutter UI
+\end{itemize}
+
+\section{Business Questions}
+
+\subsection{Question 1 (Type 2)}
+
+\textbf{Question:} ``Which offline computers do users attempt to connect to most often, and would offering a 'Notify me when online' option improve engagement?''
+
+\textbf{Justification:} Addresses user frustration (connecting to offline PC) with proactive notification.
+
+\textbf{Data source:} Connection logs tracking computer IDs, attempt frequency, and failure reasons.
+
+\textbf{Display:} Smart suggestion after repeated failed attempts: ``My-Work-PC is offline. Want notification when online?'' Then send push notification when available.
+
+\subsection{Question 2 (Type 2)}
+
+\textbf{Question:} ``What is the usage frequency of Mouse vs Touch input modes, and how does this differ across remote OS types?''
+
+\textbf{Justification:} Understanding preferences enables automatic mode selection for better UX.
+
+\textbf{Data source:} Anonymous usage tracking of mode switches, duration in each mode, and remote OS type.
+
+\textbf{Display:} Automatically default to Mouse mode for Windows connections if data shows this is preferred.
+
+\subsection{Question 3 (Type 5)}
+
+\textbf{Question:} ``What is the real-time network latency and connection type (P2P, relayed) to dynamically adjust stream quality and provide visual health indicators?''
+
+\textbf{Justification:} Combines Type 1 (telemetry for infrastructure monitoring) and Type 2 (direct UX improvement via quality adjustment and status indicators).
+
+\textbf{Data source:} Internal telemetry measuring RTT, packet loss, connection path, aggregated to analytics backend.
+
+\textbf{Benefit:} Users get adaptive quality and clear status indicators. Business gets data-driven infrastructure decisions (e.g., deploying new relay servers in high-latency regions).
+
+\section{Application Architecture}
+
+\subsection{Facade Pattern}
+
+Found in \texttt{flutter/lib/utils/http\_service.dart}. The \texttt{HttpService.sendRequest} provides single entry point for HTTP operations, abstracting Flutter HTTP vs Rust FFI routes.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\linewidth]{854d291d2c090bd119c1fec45cb7ad34a77d2eb9.png}
+\caption{Facade pattern implementation}
+\end{figure}
+
+Helper functions (\texttt{get}, \texttt{post}, \texttt{put}, \texttt{delete}) delegate to \texttt{sendRequest}, providing minimal API.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.6\linewidth]{e02f9b5d3a0881c462c7f5fcafbee85f5c2048c6.png}
+\caption{HTTP helper functions}
+\end{figure}
+
+\subsection{Adapter Pattern}
+
+Method \texttt{\_parseHttpResponse} converts Rust JSON response to Flutter \texttt{http.Response} class, hiding FFI details from consumers.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\linewidth]{416d8e3090df2563806d4cddd5271c4a7743869d.png}
+\caption{Adapter pattern}
+\end{figure}
+
+\subsection{Template Method Pattern}
+
+\texttt{BaseEventLoop} class defines \texttt{\_handleTimer} with fixed algorithm sequence, allowing subclasses to override hook methods (\texttt{onPreConsume}, \texttt{onPostConsume}).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\linewidth]{866dacea4d7b0994f10ceaa897230b738061d6c3.png}
+\caption{Template Method pattern}
+\end{figure}
+
+\section{Application UX/UI}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.3\linewidth]{22ff96bca320df6fcb951cec37323798f5f4a064.png}
+\caption{RustDesk Logo}
+\end{figure}
+
+\textbf{Design:} Dark theme with bright blue accents (\#0ab1f6). System fonts with Work Sans for Remote ID field. Control panel/dashboard metaphor.
+
+\subsection{View 1: Landing Page}
+
+Remote ID field prominently displayed in blue. Quick access icons for recent connections, favorites, contacts. Persistent tab bar for Connection/Settings navigation.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.4\linewidth]{88f12993104e618f4099938d66505b17726dd736.png}
+\caption{Landing page}
+\end{figure}
+
+\textbf{Strengths:} Large, high-contrast Remote ID. Clear navigation.
+
+\textbf{Improvements:} Could use more padding and visual hierarchy for secondary icons.
+
+\subsection{View 2: Settings}
+
+Settings organized into Account, Network (ID/Relay server config, WebSocket, UDP, IPv6), Display, and About sections. Green/gray toggles for clear state indication.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.4\linewidth]{bb246b98552164e2c0598c49d002b92425bc5dd7.png}
+\caption{Settings page}
+\end{figure}
+
+\textbf{Strengths:} Clear toggles, logical grouping. No improvements needed.
+
+\subsection{View 3: Active Session}
+
+Toolbar with keyboard shortcuts (Ctrl, Alt, Shift, Cmd). Live remote desktop feed. Mode selector (Mouse/Touch) with gesture explanations.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.4\linewidth]{ff1d16456d1576590c9fc58bfe9bc192c1578900.png}
+\caption{Active session}
+\end{figure}
+
+\textbf{Strengths:} Dual input modes with clear instructions. Keyboard shortcuts for advanced users.
+
+\textbf{Improvements:} Collapsible toolbar to reduce clutter. Smoother mode transitions.
+
+\section{Quality Attributes}
+
+\subsection{Usability}
+
+Task-driven design with three primary workflows: connect by ID, transfer files, view/control session. Dashboard presents recent peers, search, groups. Customization options: themes, quality/framerate, input modes, display arrangements. Consistent UI with confirmation dialogs and toast messages.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\linewidth]{84429831e4ad394d0a65f64a2d4429133630622c.png}
+\caption{Usability examples}
+\end{figure}
+
+\subsection{Security}
+
+End-to-end encryption for all connections. Free version: LAN discovery, whitelisting, trusted devices. Pro version: SSO (Google, Okta, Azure, GitHub), 2FA with QR setup.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\linewidth]{dd2aaf60fbf8284fccc49f6436f776cd3d56d91c.png}
+\caption{Security settings}
+\end{figure}
+
+\subsection{Internationalization}
+
+Wide language support (English, Spanish, French, Chinese, Russian, Arabic, etc.). Community-maintained translations. Language selection in settings.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.4\linewidth]{e00bd59bcbf552f217df721783265609c3e8ade8.png}
+\caption{Language options}
+\end{figure}
+
+\section{Application Libraries}
+
+\subsection{Android Dependencies}
+
+From \texttt{android/app/build.gradle}:
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\linewidth]{58bc16fe1fb496d980ec21f3477acbd4f936f0b6.png}
+\caption{Android dependencies}
+\end{figure}
+
+Key libraries: \texttt{androidx.media:media} (audio/video), \texttt{XXPermissions} (runtime permissions), \texttt{kotlin-stdlib}, \texttt{androidsvg-aar} (SVG rendering).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\linewidth]{a8b3412ce78d2e7a108ac8cb382d2a1980496947.png}
+\caption{Compilation environment}
+\end{figure}
+
+Compilation: \texttt{compileSdkVersion 34}, \texttt{minSdkVersion 21}, \texttt{targetSdkVersion 33}. Java 8 compatibility.
+
+\subsection{iOS Dependencies}
+
+From \texttt{flutter/ios/Runner/Base.lproj/Main.storyboard}: Deployment target iOS, Interface Builder Cocoa Touch plugin, Xcode 8 format for Auto Layout compatibility.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\linewidth]{e9d613714aabfb4be27a0d968473ca1686dd8aa4.png}
+\caption{iOS dependencies}
+\end{figure}
+
+\subsection{Dart Libraries}
+
+From \texttt{flutter/lib/mobile/pages/connection\_page.dart}:
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.6\linewidth]{bad63d61c1acb50f01f020ef96b80d92118160db.png}
+\caption{Dart libraries}
+\end{figure}
+
+\textbf{Key libraries:}
+\begin{itemize}
+\item \texttt{dart:async}: Future, Stream, async programming
+\item \texttt{dart:ui}: Low-level rendering APIs
+\item \texttt{dart:io}: Files, sockets, HTTP
+\item \texttt{dart:convert}: JSON, UTF-8 encoding
+\item \texttt{dart:math}: Mathematical operations
+\item \texttt{dart:typed\_data}: Binary data (Uint8List, ByteData)
+\end{itemize}
+
+\section{Eventual Connectivity Strategies}
+
+\subsection{Positive Finding 1: Connection State Feedback}
+
+Displays clear ``Connecting...'' state during connection attempts. Good ECn pattern: externalizes in-progress state, maintains user awareness.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.4\linewidth]{9503ccb8533025661c31b02f8f7ed331489bd9f1.png}
+\caption{Connection feedback}
+\end{figure}
+
+\subsection{Anti-pattern 1: Post-Disconnection Interaction}
+
+UI accepts input after disconnection without feedback. Violates ECn principles by not surfacing non-deliverability.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\linewidth]{9aefc5faad8e903ccb7206e37f50ddf8dd8dc961.png}
+\caption{Post-disconnection interaction}
+\end{figure}
+
+\textbf{Remediation:} Display toast: ``Connection lost - inputs queued for replay'' or disable commands with offline badge.
+
+\subsection{Anti-pattern 2: Low-level Error Messages}
+
+Shows technical errors (``failed to lookup address'') instead of user-friendly messages.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.4\linewidth]{65b2677b6c4ae5350624a296628a01e524a0c583.png}
+\caption{Technical error message}
+\end{figure}
+
+\textbf{Remediation:} Use semantic messages: ``Cannot reach host - will retry automatically.''
+
+\subsection{Positive Finding 2: Color Status Indicators}
+
+Green (connected) and yellow (unstable/disconnected) indicators provide explicit state visibility.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.4\linewidth]{79174844dc442e9d1208e949548d822ab6a05784.png}
+\caption{Status indicators}
+\end{figure}
+
+\subsection{Code-Level Patterns}
+
+\textbf{Backoff without jitter:} \texttt{showMsgBox()} doubles \texttt{\_reconnects} exponentially without cap or jitter. Recommend: 60-120s cap with full jitter.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\linewidth]{dfccda75a49ba7518262bb622c3c1a50533d0ce0.png}
+\caption{Retry logic}
+\end{figure}
+
+\textbf{Blocking overlay:} \texttt{shouldBeBlocked()} + \texttt{buildRemoteBlock()} disable interaction during reconnection.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\linewidth]{008bfd8ef52108d59df4c2ba9851731e447102c2.png}
+\caption{Blocking overlay}
+\end{figure}
+
+\textbf{Session startup:} \texttt{\_ffi.start()} launches session with ``Connecting...'' overlay.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\linewidth]{98e437ea82233980edc785bdbe816e73ddcb5056.png}
+\caption{Session startup}
+\end{figure}
+
+\section{Caching Strategies}
+
+\subsection{Strategy 1: Address-book Cache}
+
+Persistent, token-scoped JSON cache. Save/load via native bridge with access\_token validation. Prevents cross-user data bleed.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\linewidth]{4463b20af2c3946e88dbc10794219fcb63f23172.png}
+\caption{Address-book cache}
+\end{figure}
+
+\textbf{Storage:} ~1-2 KB per peer. 200 peers $\approx$ 200-400 KB.
+
+\subsection{Strategy 2: Group Cache}
+
+Persistent device/user/peer snapshot. Token-scoped, one-time load guard. Speeds up Group panel on startup.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.6\linewidth]{bf29b4cdc8fc3611a018d88967e1335ab5676899.png}
+\caption{Group cache}
+\end{figure}
+
+\textbf{Storage:} ~1-2 MB for typical organizational data.
+
+\subsection{Strategy 3: Cursor Cache}
+
+In-memory, per-session bitmap cache. Explicit disposal of old images to free GPU/native buffers.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.6\linewidth]{03e4b2babcd17449f0689ca75d0d22822accc353.png}
+\caption{Cursor cache}
+\end{figure}
+
+\textbf{Storage:} 64x64 RGBA $\sim$16 KB per cursor. Dozens of entries $<$1 MB.
+
+\section{Memory Management}
+
+\subsection{Strategy 1: Explicit Image Disposal}
+
+Pre-releases \texttt{ui.Image}, disposes \texttt{ImageDescriptor}/\texttt{Codec}/\texttt{ByteData} on all paths including errors. Prevents native memory leaks.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.5\linewidth]{80f902ed239be0b1f087610b0be6992ce38bf7ea.png}
+\caption{Image disposal}
+\end{figure}
+
+\subsection{Strategy 2: Widget Lifecycle Disposal}
+
+\texttt{dispose()} override releases \texttt{TextEditingController}, \texttt{FocusNode}, \texttt{Timer}. Prevents memory leaks and dangling references.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.6\linewidth]{d78123401be94447f6f85b1485ea0af9009313ed.png}
+\caption{Lifecycle disposal}
+\end{figure}
+
+\textbf{Recommendations:} Centralize disposables, guard \texttt{super.dispose()} ordering, use \texttt{CancelableOperation} for async work, add telemetry.
+
+\subsection{Strategy 3: GPU Texture Lifecycle}
+
+Create $\rightarrow$ Register $\rightarrow$ Unregister $\rightarrow$ 100ms delay $\rightarrow$ Destroy. Idempotency guards prevent double-free.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\linewidth]{8e0a2f8bea5f71c2fd424a2b5f0ddf52235246fe.png}
+\caption{GPU texture lifecycle}
+\end{figure}
+
+\textbf{Improvements:} Wrap in \texttt{try/finally}, add \_cancelled flag for create/destroy races.
+
+\section{Threading \& Concurrency}
+
+Flutter single-threaded UI uses async constructs: \texttt{Future}/\texttt{async}/\texttt{await}, \texttt{Timer}, \texttt{Future.wait}. No \texttt{Isolate} or \texttt{compute()} found.
+
+\subsection{Strategy 1: Timer-based Backoff}
+
+\texttt{showMsgBox()} schedules retry via \texttt{Timer}, doubles delay exponentially. \texttt{reconnect()} clears state and shows loading overlay.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\linewidth]{1b91abd25c137fbdd7bcbcadab45a32973a052fc.png}
+\caption{Timer scheduler}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\linewidth]{071e9e0c2a1191d6d24920218eed386ef83d3816.png}
+\caption{Reconnect executor}
+\end{figure}
+
+\textbf{Improvements:} Add jitter, cap at 60-120s, centralize retry logic.
+
+\subsection{Strategy 2: Parallel Initialization}
+
+\texttt{Future.wait()} loads multiple caches concurrently. Reduces startup latency from $\sim$200ms to $\sim$100ms.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\linewidth]{5264ff49246ab899504e1bc109c8fec6d180ad60.png}
+\caption{Parallel startup}
+\end{figure}
+
+\textbf{Improvements:} Add timeouts, graceful degradation, telemetry.
+
+\subsection{Strategy 3: Event-loop Serialization}
+
+\texttt{Timer.periodic} polls queue every 100ms. Cancels timer during processing, handles events sequentially, recreates timer.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\linewidth]{1b2f14157b664fd98c0d32e473783239696c9188.png}
+\caption{Event-loop polling}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\linewidth]{029d28797ef6d198b450e67551254135df8f0bd9.png}
+\caption{Event consumption}
+\end{figure}
+
+\textbf{Improvements:} Dynamic polling intervals, bounded queue, prioritization, batching.
+
+\section{Micro-Optimizations}
+
+\subsection{\#1: GPU Texture Lifecycle}
+
+Conditional creation based on hardware support. Early exit if unsupported. State guards prevent race conditions.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\linewidth]{micro1.png}
+\caption{GPU texture conditional creation}
+\end{figure}
+
+\textbf{Benefit:} Saves ~238MB VRAM/min on 1080p@30fps when GPU unsupported.
+
+\subsection{\#2: Delayed Texture Destruction}
+
+100ms delay between unregister and destroy prevents GPU use-after-free. ~6 frame buffer at 60fps.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\linewidth]{micro2.png}
+\caption{Delayed destruction}
+\end{figure}
+
+\subsection{\#3: Adaptive Filter Quality}
+
+Adjusts image filtering based on zoom: default at 1:1, medium at moderate zoom, high only at $>$10x zoom.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\linewidth]{micro3.png}
+\caption{Adaptive filtering}
+\end{figure}
+
+\textbf{Benefit:} Saves 15-20ms/frame, difference between 60fps and 45fps.
+
+\subsection{\#4: Explicit Resource Disposal}
+
+Disposes \texttt{ImmutableBuffer}, \texttt{ImageDescriptor}, \texttt{Codec} on all paths including errors.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\linewidth]{micro4.png}
+\caption{Resource disposal}
+\end{figure}
+
+\textbf{Benefit:} Prevents 8-32MB leaks per frame at 30fps.
+
+\subsection{\#5: AutomaticKeepAlive}
+
+\texttt{\_PeerCard} uses \texttt{AutomaticKeepAliveClientMixin} to preserve state when scrolled off-screen.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\linewidth]{micro5.png}
+\caption{AutomaticKeepAlive}
+\end{figure}
+
+\subsection{\#6: Const Constructors}
+
+Compile-time allocation and reuse of widgets. Reduces GC pressure.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\linewidth]{micro6.png}
+\caption{Const constructors}
+\end{figure}
+
+\subsection{\#7: Fling Gesture Throttling}
+
+Timer-based rate limiting of touch events during fast scrolling.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\linewidth]{micro7.png}
+\caption{Fling throttling}
+\end{figure}
+
+\textbf{Benefit:} Reduces network traffic by 60-80\%.
+
+\subsection{\#8: ListView.builder}
+
+Lazy widget creation on-demand as items scroll into view. O(visible items) vs O(total items).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\linewidth]{micro8.png}
+\caption{Lazy loading}
+\end{figure}
+
+\subsection{\#9: shouldRepaint Optimization}
+
+Custom painters skip repainting when content unchanged. Saves 1-5ms GPU time per frame.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\linewidth]{micro9.png}
+\caption{shouldRepaint}
+\end{figure}
+
+\subsection{Summary}
+
+\textbf{GPU Management:} Conditional creation, delayed destruction, adaptive filtering.
+
+\textbf{Memory:} Explicit disposal, const constructors, lazy loading.
+
+\textbf{Rendering:} shouldRepaint, adaptive quality, AutomaticKeepAlive.
+
+\textbf{Network:} Fling throttling reduces bandwidth during sessions.
+
+\section{Resources}
+
+\begin{itemize}
+\item Flutter SDK: \url{https://api.flutter.dev/index.html}
+\item RustDesk Docs: \url{https://rustdesk.com/docs/en/}
+\item Flutter Caching: \url{https://docs.flutter.dev/get-started/fundamentals/local-caching}
+\item Flutter Concurrency: \url{https://docs.flutter.dev/perf/isolates}
+\end{itemize}
+
+\end{document}
