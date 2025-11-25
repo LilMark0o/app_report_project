@@ -1,0 +1,342 @@
+% Informe del Proyecto: Avión con Motor de Caucho (Hangar Rat)
+\documentclass[11pt]{article}
+
+% --- PAQUETES ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{caption}
+\usepackage{xcolor}
+\usepackage{amssymb}
+
+% Colores personalizados
+\definecolor{uniandes}{RGB}{255, 205, 0}
+\definecolor{darkgray}{RGB}{50, 50, 50}
+\definecolor{accentblue}{RGB}{0, 82, 147}
+
+% Configuración de hyperref
+\hypersetup{
+  pdftitle={Proyecto Avión con Motor de Caucho - Hangar Rat},
+  pdfauthor={Equipo Historia de la Aviación},
+  colorlinks=true,
+  linkcolor=accentblue,
+  citecolor=accentblue,
+  urlcolor=accentblue
+}
+
+% Ruta de gráficos
+\graphicspath{{images_plane/}{vertopal_0f07811daf6e4406a03d42fa9af41abf/}}
+
+% --- INICIO DEL DOCUMENTO ---
+\begin{document}
+
+\sloppy
+
+% ============================================================================
+% PORTADA
+% ============================================================================
+\begin{titlepage}
+\begin{center}
+
+\vspace*{1cm}
+
+% Logo de la universidad
+\includegraphics[width=0.4\textwidth]{8ecc61efe6b89ca06deb55df77a620283385d149.png}
+
+\vspace{1.5cm}
+
+{\huge \bfseries \textcolor{darkgray}{Proyecto de Aviación}}
+
+\vspace{0.5cm}
+
+\rule{\textwidth}{1.5pt}
+
+\vspace{0.5cm}
+
+{\LARGE \bfseries Diseño y Construcción de un\\Vehículo Aéreo con Motor de Caucho}
+
+\vspace{0.3cm}
+
+{\Large \textit{Hangar Rat}}
+
+\vspace{0.5cm}
+
+\rule{\textwidth}{1.5pt}
+
+\vfill
+
+{\large \textbf{Integrantes del Equipo:}}
+
+\vspace{0.8cm}
+
+\begin{tabular}{c}
+{\Large Churi Ospina, Juan David} \\[0.4cm]
+{\Large Hurtado Rivera, Natalia Pilar} \\[0.4cm]
+{\Large Molina González, Santiago Alonso} \\[0.4cm]
+{\Large Ramírez, Marco Alejandro} \\[0.4cm]
+{\Large Rodríguez, Lucas} \\
+\end{tabular}
+
+\vfill
+
+{\large \textbf{Curso:} Historia de la Aviación: Cómo Esta Industria\\Cambió el Mundo \textit{(Ciclo 2 de 8 semanas)}}
+
+\vspace{0.5cm}
+
+{\large Universidad de los Andes}
+
+\vspace{0.5cm}
+
+{\large Bogotá, Colombia\\
+Noviembre 2025}
+
+\end{center}
+\end{titlepage}
+
+% ============================================================================
+% ÍNDICE
+% ============================================================================
+\tableofcontents
+\newpage
+
+% ============================================================================
+% INTRODUCCIÓN
+% ============================================================================
+\section{Introducción}
+
+El presente informe documenta el proceso de diseño, construcción y pruebas de un vehículo aéreo tipo \textit{Hangar Rat}, propulsado por un motor de caucho (goma). Este proyecto fue desarrollado como parte del curso \textit{Historia de la Aviación: Cómo Esta Industria Cambió el Mundo}, con el objetivo de participar en una competencia de tiempo de vuelo.
+
+\subsection{Objetivos del Proyecto}
+
+\begin{itemize}
+    \item Diseñar y construir un vehículo aéreo que cumpla con las especificaciones técnicas establecidas.
+    \item Maximizar el tiempo de vuelo del avión para obtener la mejor figura de mérito posible.
+    \item Aplicar conocimientos de aerodinámica, materiales y manufactura en un proyecto práctico.
+    \item Trabajar de manera colaborativa y eficiente como equipo de ingeniería.
+\end{itemize}
+
+% ============================================================================
+% PROCESO DE MANUFACTURA
+% ============================================================================
+\section{Proceso de Manufactura}
+
+El proceso de construcción del avión se dividió en varias etapas, aprovechando los recursos disponibles en el Mecha Lab de la universidad.
+
+\subsection{Fase 1: Corte con Cortadora Láser}
+
+Para esta fase, descargamos el archivo \textbf{.rld} con los planos de las piezas estructurales que nos proporcionaron en \textbf{Bloque Neón} (plataforma de tareas de la universidad). Con la guía de \textbf{Esteban Gnecco}, quien nos apoyó en el proceso, procedimos a cortar las piezas utilizando la cortadora láser \textbf{Precision Machine Modelo 6} disponible en el laboratorio.
+
+Se utilizó MDF (Medium Density Fiberboard) como material para las piezas estructurales debido a su facilidad de corte y la alta precisión que ofrece la cortadora láser.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.55\textwidth]{cortadora_lazer.jpeg}
+    \caption{Proceso de corte láser en la máquina Precision Machine Modelo 6}
+    \label{fig:cortadora}
+\end{figure}
+
+\subsection{Fase 2: Piezas Estructurales en MDF}
+
+Tras el proceso de corte láser, obtuvimos todas las piezas necesarias para la estructura del avión:
+
+\begin{itemize}
+    \item Marcos estructurales para las alas (forma trapezoidal)
+    \item Costillas aerodinámicas para dar perfil al ala
+    \item Varillas de refuerzo longitudinal
+    \item Piezas para el estabilizador horizontal y vertical (empenaje)
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{piezas_cortadas_dmf.jpeg}
+    \caption{Piezas estructurales cortadas en MDF listas para ensamblaje}
+    \label{fig:piezas_mdf}
+\end{figure}
+
+\subsection{Fase 3: Ensamblaje Colaborativo}
+
+El ensamblaje del avión fue un proceso colaborativo donde todos los miembros del equipo participaron activamente. Utilizamos el espacio de city U para trabajar de manera conjunta y eficiente, usamos elementos como super bonder, papel mantequilla, ligas, etc.
+
+Durante esta fase:
+\begin{itemize}
+    \item Ensamblamos los marcos de las alas con las costillas
+    \item Unimos las piezas utilizando pegamento instantáneo (cianoacrilato)
+    \item Verificamos la alineación y simetría de las estructuras
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{co-working.jpeg}
+    \caption{Trabajo colaborativo del equipo durante el ensamblaje}
+    \label{fig:coworking}
+\end{figure}
+
+\subsection{Fase 4: Optimización con Madera de Balso}
+
+Dado que el MDF resultaba relativamente pesado para una aeronave de este tipo, decidimos complementar la estructura con \textbf{madera de balso} para reducir el peso total del vehículo sin comprometer la integridad estructural.
+
+La madera de balso ofrece una excelente relación peso-resistencia, siendo el material tradicional en la construcción de aeromodelos.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{trimming_wood.jpeg}
+    \caption{Estación de trabajo con herramientas para corte y ajuste de madera balsa y construcción del fuselaje}
+    \label{fig:balsa}
+\end{figure}
+
+\subsection{Fase 5: Revestimiento de Superficies Aerodinámicas}
+
+Las alas y los estabilizadores fueron revestidos con \textbf{papel mantequilla} para crear las superficies aerodinámicas necesarias para generar sustentación.
+
+\textbf{Ventajas del papel mantequilla:}
+\begin{itemize}
+    \item Peso extremadamente bajo
+    \item Facilidad de aplicación y tensado
+    \item Permite observar la estructura interna
+    \item Económico y fácil de reemplazar
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.55\textwidth]{alas_cola_con_papel.jpeg}
+    \caption{Alas y estabilizadores revestidos con papel mantequilla}
+    \label{fig:alas_papel}
+\end{figure}
+
+% ============================================================================
+% SISTEMA DE PROPULSIÓN
+% ============================================================================
+\section{Sistema de Propulsión}
+
+\subsection{Diseño de la Hélice}
+
+Para la fabricación de la hélice, utilizamos un enfoque innovador y sostenible: \textbf{reciclar una lata de aluminio} de bebida. Este material ofrece características ideales para este componente:
+
+\begin{itemize}
+    \item Excelente relación peso-resistencia
+    \item Facilidad de corte y moldeado manual
+    \item Disponibilidad inmediata y bajo costo
+    \item Flexibilidad suficiente para ajustar el paso de las palas
+    \item Acabado liso que reduce la fricción con el aire
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{materia_prima_helice.jpeg}
+    \caption{Lata de aluminio utilizada como materia prima para fabricar la hélice}
+    \label{fig:lata}
+\end{figure}
+
+\subsection{Motor de Caucho}
+
+El sistema de propulsión consiste en una banda de caucho (goma) que almacena energía mecánica al ser enrollada. Al liberarse, la energía se transfiere a la hélice generando el empuje necesario para el vuelo.
+
+\subsection{Pruebas de Funcionamiento}
+
+Antes de ensamblar las alas, realizamos pruebas preliminares del sistema de propulsión utilizando únicamente el fuselaje con la hélice y el motor de caucho montados. Esto nos permitió verificar:
+
+\begin{itemize}
+    \item Correcta rotación de la hélice sin vibraciones
+    \item Empuje generado por el motor de caucho
+    \item Eficiencia del sistema de propulsión
+    \item Estabilidad del eje y la hélice durante el giro
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{prueba_helice.png}
+    \caption{Prueba del sistema de propulsión: fuselaje con hélice y motor de caucho (sin alas)}
+    \label{fig:prueba_helice}
+\end{figure}
+
+% ============================================================================
+% TRABAJO EN EQUIPO
+% ============================================================================
+\section{Trabajo en Equipo}
+
+El éxito de este proyecto fue posible gracias a la colaboración efectiva de todos los miembros del equipo. La distribución de responsabilidades permitió un avance eficiente y coordinado.
+
+\subsection{Distribución de Tareas}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{5cm}|p{8cm}|}
+\hline
+\textbf{Área} & \textbf{Descripción} \\
+\hline
+Corte láser & Supervisión y ejecución del proceso de corte en MDF \\
+Ensamblaje estructural & Armado de alas, fuselaje y empenaje \\
+Fabricación de hélice & Diseño y construcción del sistema de propulsión \\
+Pruebas y ajustes & Iteraciones para optimizar el rendimiento \\
+Documentación & Registro fotográfico y elaboración del informe \\
+\hline
+\end{tabular}
+\caption{Distribución de tareas del equipo}
+\end{table}
+
+\subsection{Valores del Equipo}
+
+La comunicación constante, el respeto mutuo y el compromiso de cada miembro fueron fundamentales para cumplir con los plazos establecidos y lograr un producto final funcional. El trabajo colaborativo en el Mecha Lab fortaleció las habilidades de trabajo en equipo y resolución de problemas.
+
+% ============================================================================
+% RESULTADOS Y CONCLUSIONES
+% ============================================================================
+\section{Resultados y Conclusiones}
+
+\subsection{Resultados Obtenidos}
+
+Se logró construir exitosamente un vehículo aéreo tipo Hangar Rat que cumple con todas las especificaciones técnicas requeridas:
+
+\begin{itemize}
+    \item[$\checkmark$] Sistema de propulsión funcional con motor de caucho
+    \item[$\checkmark$] Tren de aterrizaje incorporado
+    \item[$\checkmark$] Superficies aerodinámicas adecuadas para la sustentación
+    \item[$\checkmark$] Estructura liviana pero resistente
+\end{itemize}
+
+\subsection{¿Por Qué Debería Volar?}
+
+El avión fue diseñado siguiendo los principios fundamentales de la aerodinámica:
+
+\begin{itemize}
+    \item \textbf{Sustentación:} Las alas generan sustentación gracias al perfil aerodinámico creado por las costillas y el papel mantequilla tensado. El aire que pasa por encima del ala viaja más rápido que el de abajo, creando una diferencia de presión que empuja el avión hacia arriba.
+    \item \textbf{Empuje:} La hélice, impulsada por el motor de caucho enrollado, genera el empuje necesario para vencer la resistencia del aire y propulsar el avión hacia adelante.
+    \item \textbf{Peso reducido:} La combinación de MDF, madera de balso y papel mantequilla mantiene el peso total lo suficientemente bajo para que la sustentación generada supere la fuerza de gravedad.
+    \item \textbf{Estabilidad:} Los estabilizadores horizontal y vertical (empenaje) proporcionan control direccional y evitan que el avión cabecee o gire descontroladamente.
+\end{itemize}
+
+\subsection{Lecciones Aprendidas}
+
+Durante el desarrollo del proyecto, el equipo adquirió valiosas experiencias en:
+
+\begin{enumerate}
+    \item \textbf{Manufactura digital:} Uso de cortadora láser para corte de precisión
+    \item \textbf{Selección de materiales:} Criterios de peso vs. resistencia
+    \item \textbf{Aerodinámica aplicada:} Principios de sustentación y empuje
+    \item \textbf{Trabajo colaborativo:} Coordinación y comunicación efectiva
+    \item \textbf{Resolución de problemas:} Adaptación ante imprevistos
+    \item \textbf{Sostenibilidad:} Uso de materiales reciclados (lata de aluminio)
+\end{enumerate}
+
+\subsection{Conclusiones}
+
+El proyecto permitió aplicar de manera práctica los conceptos teóricos de aerodinámica e ingeniería en la construcción de un vehículo aéreo. La combinación estratégica de materiales (MDF para precisión en corte, madera balsa para ligereza, papel mantequilla para superficies y aluminio reciclado para la hélice) demostró ser efectiva para lograr una estructura funcional y competitiva.
+
+El trabajo en equipo fue el pilar fundamental para completar el proyecto dentro del plazo establecido, y la experiencia adquirida será invaluable para futuros proyectos de ingeniería.
+
+% ============================================================================
+% REFERENCIAS
+% ============================================================================
+\section{Referencias}
+
+\begin{enumerate}
+    \item Wickert, J. and Lewis, K. (2013). \textit{An Introduction to Mechanical Engineering}, Third Edition. SI. Stamford: Cengage Learning.
+    \item Radical RC. ``Free flight old time rubber phantom flash ROG 16''. Disponible en: \url{https://www.radicalrc.com/item/Free-Flight-Old-Time-Rubber-Phantom-Flash-ROG-16-107964}
+    \item Joyplanes. ``Free flight balsa wood model airplane with rubber powered propeller''. Disponible en: \url{https://joyplanes.com/en/product/free-fligh-rubber-powered/}
+\end{enumerate}
+
+\end{document}

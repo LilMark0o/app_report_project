@@ -2,8 +2,8 @@
 
 # Script to compile LaTeX and clean up temporary files
 
-LATEX_FILE="latex_app_report_final.ltx"
-PDF_NAME="latex_app_report_final.pdf"
+LATEX_FILE="informe_avion.ltx"
+PDF_NAME="informe_avion.pdf"
 
 echo "🔨 Compiling LaTeX document..."
 echo ""
